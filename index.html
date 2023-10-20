@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera App</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #photo {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" accept="image/*" capture="camera" id="fileInput" style="display: none;">
+    <button onclick="takePhoto()">Take Photo</button>
+    <img id="photo" alt="Captured Photo">
+    
+    <script>
+        function takePhoto() {
+            document.getElementById('fileInput').click();
+        }
+
+        function displayPhoto() {
+            const fileInput = document.getElementById('fileInput');
+            const photo = document.getElementById('photo');
+
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photo.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Listen for file input change event
+        document.getElementById('fileInput').addEventListener('change', displayPhoto);
+    </script>
+</body>
+</html>
